@@ -1,0 +1,124 @@
+.landing {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing--container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  position: relative;
+}
+
+.landing--img {
+  max-height: 550px;
+  width: auto; /* Auto width to maintain aspect ratio */
+  position: absolute;
+  left: 35%;
+  transform: translateX(-50%);
+  object-fit: cover;
+  border-radius: 15px; /* Slightly rounded corners */
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s, transform 0.3s;
+}
+
+/* Add a subtle hover effect */
+.landing--img:hover {
+  transform: translateX(-50%) scale(1.05); /* Slight zoom on hover */
+}
+
+.landing--container-left {
+  flex: 35%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.lcl--content {
+  margin: 3rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.landing--social {
+  font-size: 35px;
+  margin: 0 1rem;
+  transition: transform 0.5s;
+}
+
+.landing--social:hover {
+  transform: scale(1.2);
+}
+
+.landing--container-right {
+  flex: 65%;
+  height: 100%;
+  background-color: #eaeaea;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.lcr--content {
+  width: 45%;
+  margin-right: 7rem;
+  font-family: var(--primaryFont);
+  font-style: normal;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1100px) {
+  .landing--img {
+    max-height: 450px; /* Adjust max height for smaller screens */
+  }
+}
+
+@media (max-width: 900px) {
+  .landing--img {
+    max-height: 350px;
+  }
+}
+
+@media (max-width: 600px) {
+  .landing--container {
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .landing--img {
+    max-height: 300px;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@media (max-width: 500px) {
+  .lcr--content {
+    margin-top: 35%;
+  }
+}
+
+@media (max-width: 370px) {
+  .lcr--content {
+    margin-top: 60%;
+  }
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-device-pixel-ratio: 2) and (device-aspect-ratio: 2/3) {
+  .landing {
+    height: 100%;
+  }
+
+  .landing--img {
+    max-height: 250px;
+    left: 50%;
+    top: 20%;
+  }
+}
