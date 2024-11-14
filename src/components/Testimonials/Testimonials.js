@@ -21,7 +21,7 @@ function Testimonials() {
         arrows: false,
         slidesToShow: 1,
         slidesToScroll: 1,
-        autoplay: true,
+        autoplay: false,
         margin: 3,
         loop: true,
         autoplaySpeed: 3000,
