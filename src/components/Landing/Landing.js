@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     },
     '@media (max-width: 600px)': {
         image: {
-            maxHeight: '250px',
+            maxHeight: '230px',
         },
         text: {
             maxWidth: '90%',
