@@ -16,9 +16,6 @@
     width: 100%;
     padding: 0 3rem;
     margin-top: 1rem;
-    /* position: fixed; */
-    /* top: 10px; */
-    
 }
 
 .navbar--logo {
@@ -26,70 +23,72 @@
     cursor: pointer;
 }
 
-.navbar--container > h1 {
-    font-family: 'BestermindRegular';
-    color: var(--primary-2);
+.navbar--container ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+}
+
+.navbar--container ul li {
+    display: inline;
+}
+
+.navbar--container ul li a {
+    text-transform: uppercase;
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease; /* Плавний перехід кольору тексту */
+    position: relative;
+}
+
+.navbar--container ul li a:hover {
+    color: #3fc337cc; /* Текст стає чорним при наведенні */
+}
+
+.navbar--container ul li a::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, var(--primary), var(--secondary)); /* Градієнтна лінія */
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+}
+
+.navbar--container ul li a:hover::after {
+    transform: scaleX(1); /* Нижня лінія з'являється при наведенні */
+}
+
+@media (max-width: 767px) {
+    .navbar--container ul {
+        display: none; /* Приховуємо горизонтальне меню */
+    }
+    .navbar .navMenu {
+        display: block; /* Показуємо іконку бургер-меню */
+    }
+}
+
+.navbar .navMenu {
     font-size: 2.5rem;
-    user-select: none;
+    color: white;
+    cursor: pointer;
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    display: none; /* Приховуємо на великих екранах */
+    transition: color 0.3s ease;
 }
 
-.navLink--container {
-    margin-top: 5rem;
+.navbar .navMenu:hover {
+    color: var(--primary);
 }
 
-.drawer > .MuiBackdrop-root {
-    background: rgba(33, 33, 33, 0.15) !important;
-    backdrop-filter: blur(20px) !important;
-}
-
-
-
-@media (max-width:1100px) {
-    .navbar--container{
-        padding: 0 2rem;
-    }
-    .navbar--container > h1{
-        font-size: 2.2rem;
-    }
-    .nav-menu{
-        font-size: 2.2rem;
-        margin-top: -1.5rem;
-    }
-}
-
-@media (max-width:800px) {
-    .navLink--container {
-        margin-top: 3rem;
-    }
-}
-
-
-@media (max-width:600px) {
-    .nav-menu{
-        color: var(--primary-2);
-    }
-    .navbar--container > h1{
-        font-size: 2rem;
-    }
-    .nav-menu:hover{
-        color: var(--primary-2);
-    }
-    .MuiDrawer-paper{
-      border-radius: 0 !important;
-    }
-}
-
-
-@media only screen and (min-device-width: 320px) and (max-device-width: 
-  480px) and (-webkit-device-pixel-ratio: 2) and (device-aspect-ratio: 2/3) {
-    .navbar {
-        height: 5rem;
-    }
-    .navbar--container {
-        padding: 0 1rem;
-        margin-top: 0rem;
-    }
-    .navbar--container > h1 {
-        font-size: 1.5rem;
+@media (max-width: 767px) {
+    .navbar .navMenu {
+        display: block; /* Показуємо на маленьких екранах */
     }
 }

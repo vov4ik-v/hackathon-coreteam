@@ -11,7 +11,7 @@
 }
 
 .description-text.expanded {
-    max-height: 100rem; /* Велике значення для повного відображення */
+    max-height: 120rem; /* Велике значення для повного відображення */
 }
 
 .expand-button {

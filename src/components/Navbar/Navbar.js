@@ -1,78 +1,100 @@
 import React, { useContext, useState } from 'react';
 import { NavHashLink as NavLink } from 'react-router-hash-link';
-import { Fade } from 'react-awesome-reveal';
-import { IoMenuSharp, IoHomeSharp } from 'react-icons/io5';
-import { HiDocumentText } from 'react-icons/hi';
-import { BsFillGearFill } from 'react-icons/bs';
-import { MdPhone } from 'react-icons/md';
-import { FaUser, FaFolderOpen } from 'react-icons/fa';
+import { IoMenuSharp } from 'react-icons/io5';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CloseIcon from '@material-ui/icons/Close';
 import logo from '../../assets/svg/logo/HackLogo.svg'; // Adjust the path as needed
 import './Navbar.css';
-import { headerData } from '../../data/headerData';
 import { ThemeContext } from '../../contexts/ThemeContext';
 
 function Navbar() {
-    const { theme, setHandleDrawer } = useContext(ThemeContext);
+    const { theme } = useContext(ThemeContext);
 
     const [open, setOpen] = useState(false);
 
     const handleDrawerOpen = () => {
         setOpen(true);
-        setHandleDrawer();
     };
 
     const handleDrawerClose = () => {
         setOpen(false);
-        setHandleDrawer();
     };
 
     const useStyles = makeStyles((t) => ({
         navMenu: {
-            fontSize: '2.5rem',
+            fontSize: '3rem',
             color: theme.tertiary,
             cursor: 'pointer',
-            transform: 'translateY(-10px)',
-            transition: 'color 0.3s',
-            position: "fixed",
-            top:"30px",
-            right: "30px",
+            position: 'fixed',
+            top: '30px',
+            right: '30px',
+            display: 'none', // Hidden on large screens
             '&:hover': {
                 color: theme.primary,
             },
-            [t.breakpoints.down('sm')]: {
-                fontSize: '2.5rem',
+            [t.breakpoints.down(768)]: {
+                display: 'block', // Visible only on small screens
             },
-            [t.breakpoints.down('xs')]: {
-                fontSize: '2rem',
+        },
+        navLinks: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            listStyle: 'none',
+            gap: '2rem',
+            margin: 0,
+            padding: 0,
+            paddingRight: '3rem', // Added padding to the right
+            position: 'absolute',
+            right: '2rem',
+            top: '2rem',
+        },
+        navLink: {
+            fontSize: '1rem',
+            fontWeight: '600',
+            textTransform: 'uppercase',
+            color: theme.primary,
+            textDecoration: 'none',
+            position: 'relative',
+            transition: 'color 0.3s ease', // Плавний перехід кольору тексту
+            '&::after': {
+                content: '""',
+                position: 'absolute',
+                left: 0,
+                bottom: '-5px',
+                height: '2px',
+                width: '100%',
+                background: `linear-gradient(to right, ${theme.primary}, ${theme.secondary})`,
+                transform: 'scaleX(0)',
+                transition: 'transform 0.3s ease',
+            },
+            '&:hover': {
+                color: 'black', // Чорний текст при наведенні
+            },
+            '&:hover::after': {
+                transform: 'scaleX(1)', // Лінія з'являється при наведенні
             },
         },
         MuiDrawer: {
             padding: '0em 1.8em',
             width: '16em',
-            fontFamily: ' var(--primaryFont)',
-            fontStyle: ' normal',
-            fontWeight: ' normal',
-            fontSize: ' 24px',
+            fontFamily: 'var(--primaryFont)',
             background: theme.secondary,
-            overflow: 'hidden',
             borderTopRightRadius: '40px',
             borderBottomRightRadius: '40px',
+            overflow: 'hidden',
             [t.breakpoints.down('sm')]: {
                 width: '13em',
             },
         },
         closebtnIcon: {
             fontSize: '2rem',
-            fontWeight: 'bold',
             cursor: 'pointer',
             color: theme.primary,
             position: 'absolute',
             right: 40,
             top: 40,
-            transition: 'color 0.2s',
             '&:hover': {
                 color: theme.tertiary,
             },
@@ -81,63 +103,41 @@ function Navbar() {
                 top: 20,
             },
         },
-        drawerItem: {
-            margin: '2rem auto',
-            borderRadius: '78.8418px',
-            background: theme.secondary,
-            color: theme.primary,
-            width: '85%',
-            height: '60px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-evenly',
-            padding: '0 30px',
-            boxSizing: 'border-box',
-            border: '2px solid',
-            borderColor: theme.primary,
-            transition: 'background-color 0.2s, color 0.2s',
-            '&:hover': {
-                background: theme.primary,
-                color: theme.secondary,
-            },
-            [t.breakpoints.down('sm')]: {
-                width: '100%',
-                padding: '0 25px',
-                height: '55px',
-            },
-        },
-        drawerLinks: {
-            fontFamily: 'var(--primaryFont)',
-            width: '60%',
-            fontSize: '1.3rem',
-            fontWeight: 600,
-            [t.breakpoints.down('sm')]: {
-                fontSize: '1.125rem',
-            },
-        },
-        drawerIcon: {
-            fontSize: '1.6rem',
-            [t.breakpoints.down('sm')]: {
-                fontSize: '1.385rem',
-            },
-        },
     }));
 
     const classes = useStyles();
 
-    const shortname = (name) => {
-        if (name.length > 12) {
-            return name.split(' ')[0];
-        } else {
-            return name;
-        }
-    };
-
     return (
         <div className='navbar'>
-            <div  className='navbar--container'>
-                <img src={logo} alt="Logo" className="navbar--logo"/>
-
+            <div className='navbar--container'>
+                <img src={logo} alt="Logo" className="navbar--logo" />
+                <ul className={classes.navLinks}>
+                    <li>
+                        <NavLink to="/" smooth className={classes.navLink}>
+                            Home
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/#about" smooth className={classes.navLink}>
+                            Who am I?
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/#why" smooth className={classes.navLink}>
+                            Why me?
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/#skills" smooth className={classes.navLink}>
+                            Skills
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/#answers" smooth className={classes.navLink}>
+                            Answers
+                        </NavLink>
+                    </li>
+                </ul>
                 <IoMenuSharp
                     className={classes.navMenu}
                     onClick={handleDrawerOpen}
@@ -147,127 +147,48 @@ function Navbar() {
             </div>
             <Drawer
                 variant='temporary'
-                onClose={(event, reason) => {
-                    if (reason !== 'backdropClick') {
-                        handleDrawerClose();
-                    } else if (reason !== 'escapeKeyDown') {
-                        handleDrawerClose();
-                    }
-                }}
+                onClose={handleDrawerClose}
                 anchor='left'
                 open={open}
                 classes={{ paper: classes.MuiDrawer }}
-                className='drawer'
                 disableScrollLock={true}
             >
                 <div className='div-closebtn'>
                     <CloseIcon
                         onClick={handleDrawerClose}
-                        onKeyDown={(e) => {
-                            if (e.key === ' ' || e.key === 'Enter') {
-                                e.preventDefault();
-                                handleDrawerClose();
-                            }
-                        }}
                         className={classes.closebtnIcon}
                         role='button'
                         tabIndex='0'
                         aria-label='Close'
                     />
                 </div>
-                <br />
-
-                <div onClick={handleDrawerClose}>
-                    <div className='navLink--container'>
-                        <Fade left>
-                            <NavLink
-                                to='/'
-                                smooth={true}
-                                spy='true'
-                                duration={2000}
-                            >
-                                <div className={classes.drawerItem}>
-                                    <IoHomeSharp
-                                        className={classes.drawerIcon}
-                                    />
-                                    <span className={classes.drawerLinks}>
-                                        Home
-                                    </span>
-                                </div>
-                            </NavLink>
-                        </Fade>
-
-                        <Fade left>
-                            <NavLink
-                                to='/#about'
-                                smooth={true}
-                                spy='true'
-                                duration={2000}
-                            >
-                                <div className={classes.drawerItem}>
-                                    <FaUser className={classes.drawerIcon} />
-                                    <span className={classes.drawerLinks}>
-                                        Who am I?
-                                    </span>
-                                </div>
-                            </NavLink>
-                        </Fade>
-
-                        <Fade left>
-                            <NavLink
-                                to='/#why'
-                                smooth={true}
-                                spy='true'
-                                duration={2000}
-                            >
-                                <div className={classes.drawerItem}>
-                                    <HiDocumentText
-                                        className={classes.drawerIcon}
-                                    />
-                                    <span className={classes.drawerLinks}>
-                                        Why me?
-                                    </span>
-                                </div>
-                            </NavLink>
-                        </Fade>
-
-                        <Fade left>
-                            <NavLink
-                                to='/#skills'
-                                smooth={true}
-                                spy='true'
-                                duration={2000}
-                            >
-                                <div className={classes.drawerItem}>
-                                    <BsFillGearFill
-                                        className={classes.drawerIcon}
-                                    />
-                                    <span className={classes.drawerLinks}>
-                                        Skills
-                                    </span>
-                                </div>
-                            </NavLink>
-                        </Fade>
-
-                        <Fade left>
-                            <NavLink
-                                to='/#answers'
-                                smooth={true}
-                                spy='true'
-                                duration={2000}
-                            >
-                                <div className={classes.drawerItem}>
-                                    <FaFolderOpen
-                                        className={classes.drawerIcon}
-                                    />
-                                    <span className={classes.drawerLinks}>
-                                        Answers
-                                    </span>
-                                </div>
-                            </NavLink>
-                        </Fade>
-                    </div>
-                </div>
+                <ul>
+                    <li>
+                        <NavLink to="/" smooth onClick={handleDrawerClose}>
+                            Home
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/#about" smooth onClick={handleDrawerClose}>
+                            Who am I?
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/#why" smooth onClick={handleDrawerClose}>
+                            Why me?
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/#skills" smooth onClick={handleDrawerClose}>
+                            Skills
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink to="/#answers" smooth onClick={handleDrawerClose}>
+                            Answers
+                        </NavLink>
+                    </li>
+                </ul>
             </Drawer>
         </div>
     );

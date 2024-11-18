@@ -23,9 +23,8 @@ function About() {
                     <p
                         className={`description-text ${isExpanded ? 'expanded' : ''}`}
                         style={{ color: theme.tertiary80 }}
-                    >
-                        {aboutData.description1}
-                    </p>
+                        dangerouslySetInnerHTML={{ __html: aboutData.description1 }} // Вставка HTML
+                    />
                     <button onClick={toggleExpand} className="expand-button">
                         {isExpanded ? 'Згорнути' : 'Показати більше'}
                     </button>

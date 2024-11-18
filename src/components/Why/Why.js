@@ -3,6 +3,7 @@ import './Why.css';
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { whyData } from '../../data/whyData';
 import hackPhoto from '../../assets/jpg/hack_photo.JPG';
+import {aboutData} from "../../data/aboutData";
 
 function Why() {
     const { theme } = useContext(ThemeContext);
@@ -22,13 +23,13 @@ function Why() {
                     <img src={hackPhoto} alt="Why" style={{ borderRadius: '10px', objectFit: 'cover' }} />
                 </div>
                 <div className="why-description">
-                    <h2 style={{ color: theme.primary }}>{whyData.title}</h2>
+                    <h2 style={{color: theme.primary}}>{whyData.title}</h2>
                     <p
                         className={`description-text ${isExpanded ? 'expanded' : ''}`}
-                        style={{ color: theme.tertiary80 }}
-                    >
-                        {whyData.description1}
-                    </p>
+                        style={{color: theme.tertiary80}}
+                        dangerouslySetInnerHTML={{__html: whyData.description1}}
+                    />
+
                     <button onClick={toggleExpand} className="expand-button">
                         {isExpanded ? 'Згорнути' : 'Показати більше'}
                     </button>
