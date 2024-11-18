@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
+import React, {useContext, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Typical from 'react-typical';
 
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { headerData } from '../../data/headerData';
 import mainHackathonImage from '../../assets/jpg/main_hackathon.jpg';
+
 
 const useStyles = makeStyles((theme) => ({
     landing: {
@@ -61,6 +63,8 @@ const useStyles = makeStyles((theme) => ({
 function Landing() {
     const { theme, drawerOpen } = useContext(ThemeContext);
     const classes = useStyles({ theme });
+    const [showDescription, setShowDescription] = useState(false); // Контроль відображення опису
+
 
     return (
         <div className={classes.landing}>
@@ -74,8 +78,25 @@ function Landing() {
                     }}
                 />
                 <div className={classes.text}>
-                    <h2>{headerData.name}</h2>
-                    <p>{headerData.desciption}</p>
+                    <Typical
+                        steps={[
+                            headerData.name,
+                            () => setShowDescription(true), // Показує опис після друку заголовка
+                        ]}
+                        wrapper="h2"
+                    />
+                    {/* Показ опису, коли showDescription = true */}
+                    {showDescription && (
+                        <div className={classes.description}>
+                            <Typical
+                                steps={[
+                                    headerData.desciption,
+                                    4000, // Пауза після друку опису
+                                ]}
+                                wrapper="p"
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
