@@ -1,30 +1,28 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 
 import Slider from 'react-slick';
-
 import { FaQuoteLeft, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 
 import { ThemeContext } from '../../contexts/ThemeContext';
-import {questionsData} from '../../data/questionsData';
+import { questionsData } from '../../data/questionsData';
 
 import './Testimonials.css';
 
 function Testimonials() {
     const { theme } = useContext(ThemeContext);
     const sliderRef = useRef();
+    const [isPaused, setIsPaused] = useState(false); // Стан для зупинки автоплей
 
     const settings = {
         dots: true,
         adaptiveHeight: true,
         infinite: true,
-        speed: 800,
+        speed: 1900,
         arrows: false,
         slidesToShow: 1,
         slidesToScroll: 1,
-        autoplay: true,
-        margin: 3,
-        loop: true,
-        autoplaySpeed: 5000,
+        autoplay: !isPaused, // Контроль автоплей через стан
+        autoplaySpeed: 4000,
         draggable: true,
         swipeToSlide: true,
         swipe: true,
@@ -38,39 +36,50 @@ function Testimonials() {
         sliderRef.current.slickPrev();
     };
 
+    const handleMouseDown = () => {
+        setIsPaused(true); // Зупиняємо прокрутку
+    };
+
+    const handleMouseUp = () => {
+        setIsPaused(false); // Продовжуємо прокрутку
+    };
+
     return (
         <>
             {questionsData.length > 0 && (
                 <div
                     id="answers"
-                    className='testimonials'
+                    className="testimonials"
                     style={{ backgroundColor: theme.primary }}
                 >
-                    <div className='testimonials--header'>
+                    <div className="testimonials--header">
                         <h1 style={{ color: theme.secondary }}>Відповіді на запитання</h1>
                     </div>
-                    <div className='testimonials--body'>
+                    <div className="testimonials--body">
                         <div
-                            className='testimonials--slider'
+                            className="testimonials--slider"
                             style={{ backgroundColor: theme.primary }}
                         >
                             <Slider {...settings} ref={sliderRef}>
                                 {questionsData.map((question) => (
                                     <div
-                                        className='single--testimony'
+                                        className="single--testimony"
                                         key={question.id}
+                                        onMouseDown={handleMouseDown} // Зупинка прокрутки при натисканні
+                                        onMouseUp={handleMouseUp} // Продовження прокрутки при відпусканні
+                                        onTouchStart={handleMouseDown} // Для сенсорних екранів
+                                        onTouchEnd={handleMouseUp} // Для сенсорних екранів
                                     >
-                                        <div className='testimonials--container'>
+                                        <div className="testimonials--container">
                                             <div
-                                                className='review--content'
+                                                className="review--content"
                                                 style={{
-                                                    backgroundColor:
-                                                        theme.secondary,
+                                                    backgroundColor: theme.secondary,
                                                     color: theme.tertiary,
                                                 }}
                                             >
                                                 <h2>{question.title}</h2>
-                                                <br/>
+                                                <br />
                                                 <h3>{question.text}</h3>
                                             </div>
                                         </div>
@@ -78,23 +87,23 @@ function Testimonials() {
                                 ))}
                             </Slider>
                             <button
-                                className='prevBtn'
+                                className="prevBtn"
                                 onClick={gotoPrev}
                                 style={{ backgroundColor: theme.secondary }}
                             >
                                 <FaArrowLeft
                                     style={{ color: theme.primary }}
-                                    aria-label='Previous testimonial'
+                                    aria-label="Previous testimonial"
                                 />
                             </button>
                             <button
-                                className='nextBtn'
+                                className="nextBtn"
                                 onClick={gotoNext}
                                 style={{ backgroundColor: theme.secondary }}
                             >
                                 <FaArrowRight
                                     style={{ color: theme.primary }}
-                                    aria-label='Next testimonial'
+                                    aria-label="Next testimonial"
                                 />
                             </button>
                         </div>
