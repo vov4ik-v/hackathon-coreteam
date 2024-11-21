@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typical from 'react-typical';
 
@@ -6,14 +6,14 @@ import { ThemeContext } from '../../contexts/ThemeContext';
 import { headerData } from '../../data/headerData';
 import mainHackathonImage from '../../assets/jpg/main_hackathon.jpg';
 
-
 const useStyles = makeStyles((theme) => ({
     landing: {
         height: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: (props) => `linear-gradient(90deg, ${props.theme.primary} 35%, ${props.theme.secondary} 65%)`,
+        background: (props) =>
+            `linear-gradient(90deg, ${props.theme.primary} 35%, ${props.theme.secondary} 65%)`,
     },
     content: {
         display: 'flex',
@@ -30,8 +30,20 @@ const useStyles = makeStyles((theme) => ({
         objectFit: 'cover',
         borderRadius: '15px',
         transition: 'transform 0.3s',
+        opacity: 0,
+        animation: `$flyIn 2s ease-out forwards`,
         '&:hover': {
             transform: 'scale(1.05)',
+        },
+    },
+    '@keyframes flyIn': {
+        from: {
+            transform: 'translateX(-100vw)',
+            opacity: 0,
+        },
+        to: {
+            transform: 'translateX(0)',
+            opacity: 1,
         },
     },
     text: {
@@ -39,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
         fontFamily: 'var(--primaryFont)',
         maxWidth: '500px',
     },
+    // Адаптивні стилі...
     '@media (max-width: 900px)': {
         content: {
             flexDirection: 'column',
@@ -61,38 +74,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Landing() {
-    const { theme, drawerOpen } = useContext(ThemeContext);
+    const { theme } = useContext(ThemeContext);
     const classes = useStyles({ theme });
-    const [showDescription, setShowDescription] = useState(false); // Контроль відображення опису
-
+    const [showDescription, setShowDescription] = useState(false);
 
     return (
         <div className={classes.landing}>
             <div className={classes.content}>
-                <img
-                    src={mainHackathonImage}
-                    alt=""
-                    className={classes.image}
-                    style={{
-                        opacity: `${drawerOpen ? '0' : '1'}`,
-                    }}
-                />
+                <img src={mainHackathonImage} alt="" className={classes.image} />
                 <div className={classes.text}>
                     <Typical
-                        steps={[
-                            headerData.name,
-                            () => setShowDescription(true), // Показує опис після друку заголовка
-                        ]}
+                        steps={[headerData.name, () => setShowDescription(true)]}
                         wrapper="h2"
                     />
-                    {/* Показ опису, коли showDescription = true */}
                     {showDescription && (
                         <div className={classes.description}>
                             <Typical
-                                steps={[
-                                    headerData.desciption,
-                                    4000, // Пауза після друку опису
-                                ]}
+                                steps={[headerData.desciption, 4000]}
                                 wrapper="p"
                             />
                         </div>
