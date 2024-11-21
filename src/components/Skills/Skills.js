@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import Marquee from "react-fast-marquee";
 
 import './Skills.css';
@@ -8,8 +8,15 @@ import { skillsData } from '../../data/skillsData';
 import { skillsImage } from '../../utils/skillsImage';
 
 function Skills() {
-
     const { theme } = useContext(ThemeContext);
+    const scrollRef = useRef(null); // Референція для обгортки скролу
+
+    // Обробка горизонтального скролу за допомогою коліщатка миші
+    const handleScroll = (e) => {
+        if (scrollRef.current) {
+            scrollRef.current.scrollLeft += e.deltaY; // Горизонтальний скрол пропорційно вертикальному
+        }
+    };
 
     const skillBoxStyle = {
         backgroundColor: theme.secondary,
@@ -21,16 +28,19 @@ function Skills() {
             <div className="skillsHeader">
                 <h2 style={{ color: theme.primary }}>Skills</h2>
             </div>
-            <div className="skillsContainer">
+            <div
+                className="skillsContainer"
+                ref={scrollRef} // Додаємо референцію для контейнера
+                onWheel={handleScroll} // Додаємо горизонтальний скрол мишкою
+            >
                 <div className="skill--scroll">
                     <Marquee
                         gradient={false}
-                        speed={50}
+                        speed={110}
                         pauseOnHover={true}
                         pauseOnClick={true}
                         direction="left"
-                        drag={true}
-
+                        drag={true} // Дозволяє перетягування елементів
                     >
                         {skillsData.map((skill, id) => (
                             <div className="skill--box" key={id} style={skillBoxStyle}>
