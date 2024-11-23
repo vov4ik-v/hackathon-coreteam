@@ -1,19 +1,24 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Typical from 'react-typical';
-
 import { ThemeContext } from '../../contexts/ThemeContext';
 import { headerData } from '../../data/headerData';
 import mainHackathonImage from '../../assets/jpg/main_hackathon.jpg';
+import TypingText from "./util";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     landing: {
         height: '100vh',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: (props) =>
-            `linear-gradient(90deg, ${props.theme.primary} 35%, ${props.theme.secondary} 65%)`,
+        background: 'linear-gradient(90deg, #3fc337, #212121)', // Кольори градієнта
+        backgroundSize: '200% 200%', // Великий розмір фону для плавної анімації
+        animation: `$gradientAnimation 15s ease infinite`, // Довга анімація для плавності
+    },
+    '@keyframes gradientAnimation': {
+        '0%': { backgroundPosition: '0% 50%' },
+        '50%': { backgroundPosition: '100% 50%' },
+        '100%': { backgroundPosition: '0% 50%' },
     },
     content: {
         display: 'flex',
@@ -22,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
         width: '90%',
         maxWidth: '1200px',
         padding: '2rem',
+        zIndex: 1, // Зміщує контент над фоном
     },
     image: {
         maxHeight: '500px',
@@ -47,11 +53,10 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     text: {
-        color: (props) => props.theme.tertiary,
+        color: '#FFFFFF',
         fontFamily: 'var(--primaryFont)',
         maxWidth: '500px',
     },
-    // Адаптивні стилі...
     '@media (max-width: 900px)': {
         content: {
             flexDirection: 'column',
@@ -73,27 +78,27 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 function Landing() {
-    const { theme } = useContext(ThemeContext);
-    const classes = useStyles({ theme });
+    const classes = useStyles();
     const [showDescription, setShowDescription] = useState(false);
 
+    useEffect(() => {
+        const typingTime = headerData.name.length * 25 + 500;
+        const timer = setTimeout(() => {
+            setShowDescription(true);
+        }, typingTime);
+        return () => clearTimeout(timer);
+    }, []);
+
     return (
-        <div className={classes.landing}>
+        <div className={classes.landing} id="home">
             <div className={classes.content}>
-                <img src={mainHackathonImage} alt="" className={classes.image} />
+                <img src={mainHackathonImage} alt="Hackathon" className={classes.image} />
                 <div className={classes.text}>
-                    <Typical
-                        steps={[headerData.name, () => setShowDescription(true)]}
-                        wrapper="h2"
-                    />
+                    <TypingText text={headerData.name} typeSpeed={25} tag="h2" />
                     {showDescription && (
-                        <div className={classes.description}>
-                            <Typical
-                                steps={[headerData.desciption, 4000]}
-                                wrapper="p"
-                            />
-                        </div>
+                        <TypingText text={headerData.description} typeSpeed={25} tag="p" />
                     )}
                 </div>
             </div>

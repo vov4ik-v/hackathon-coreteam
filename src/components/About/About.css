@@ -92,7 +92,9 @@
 }
 
 .about-img {
-    margin-top: 40px;
+    position: relative; /* Змінено на relative для внутрішньої позиції */
+    align-self: flex-start; /* Фото завжди буде прикріплене до верху */
+    margin-top: 40px; /* Прибираємо відступ зверху */
     pointer-events: none;
 }
 
@@ -103,6 +105,7 @@
     border-radius: 10px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
+
 
 
 @media (min-width: 992px) and (max-width: 1380px) {
@@ -155,6 +158,11 @@
     .about-img > img {
         width: 250px;
         flex: 0.4;
+    }
+
+
+    .about-img {
+        align-self: center; /* Центруємо для вузьких екранів */
     }
 
 }

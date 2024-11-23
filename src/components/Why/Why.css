@@ -1,44 +1,3 @@
-.why-description > p {
-    font-size: 1.25rem;
-    color: #e0d9d9;
-    font-family: var(--primaryFont);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    max-height: 25rem;
-    transition: max-height 0.5s ease; /* Анімація розгортання */
-}
-
-.description-text.expanded {
-    max-height: 120rem; /* Велике значення для повного відображення */
-}
-
-.expand-button {
-    background-color: #28a745;
-    border: none;
-    border-radius: 20px;
-    color: black;
-    cursor: pointer;
-    font-size: 1rem;
-    padding: 10px 20px;
-    margin-top: 0.5rem;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-weight: 600;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.expand-button:hover {
-    background-color: #218838;
-    transform: scale(1.05); /* Невелике збільшення при наведенні */
-}
-
-.expand-button:active {
-    transform: scale(0.98); /* Зменшення при кліку */
-}
-
-/* Інші стилі залишаються незмінними */
-
 .why {
     min-height: 50vh;
     position: relative;
@@ -93,16 +52,57 @@
     font-family: var(--primaryFont);
 }
 
+.why-description > p {
+    font-size: 1.25rem;
+    color: #e0d9d9;
+    font-family: var(--primaryFont);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    max-height: 25rem;
+    transition: max-height 0.5s ease; /* Анімація розгортання */
+}
+
+.description-text.expanded {
+    max-height: 120rem; /* Велике значення для повного відображення */
+}
+
+.expand-button {
+    background-color: #28a745;
+    border: none;
+    border-radius: 20px;
+    color: black;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 10px 20px;
+    margin-top: 0.5rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: 600;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.expand-button:hover {
+    background-color: #218838;
+    transform: scale(1.05); /* Невелике збільшення при наведенні */
+}
+
+.expand-button:active {
+    transform: scale(0.98); /* Зменшення при кліку */
+}
+
 .why-img {
+    position: relative;
+    align-self: flex-start;
     margin-top: 40px;
     pointer-events: none;
 }
 
 .why-img > img {
     width: 100%;
-    max-width: 630px; /* Maximum width for larger screens */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 10px; /* Slightly rounded corners */
+    max-width: 630px; /* Максимальна ширина для великих екранів */
+    height: auto;
+    border-radius: 10px;
     box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 }
 
@@ -121,16 +121,17 @@
 }
 
 @media screen and (max-width: 992px) {
-    .why .line-styling {
-        top: 20px;
-    }
-
     .why-body {
         padding-top: 2rem;
         display: flex;
-        flex-direction: column-reverse;
+        flex-direction: column; /* Вертикальне розташування */
         align-items: center;
         justify-content: space-evenly;
+    }
+
+    .why-img {
+        align-self: center; /* Центруємо фото */
+        order: -1; /* Розташовуємо фото перед текстом */
     }
 
     .why-description {
@@ -150,6 +151,7 @@
     }
 
     .why-img > img {
+        margin-top: 40px;
         width: 550px;
         flex: 0.4;
     }
@@ -161,9 +163,11 @@
         height: 8px;
         border-radius: 50%;
     }
+
     .why-description > h2 {
         align-self: center;
     }
+
     .why-img > img {
         width: 500px;
     }
@@ -175,6 +179,7 @@
         height: 5px;
         border-radius: 50%;
     }
+
     .why .line-styling .style-line {
         width: 93%;
         height: 3px;

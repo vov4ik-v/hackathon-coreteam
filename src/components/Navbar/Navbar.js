@@ -1,20 +1,19 @@
-import React, {useContext, useState} from 'react';
-import {NavHashLink as NavLink} from 'react-router-hash-link';
+import React, { useContext, useState } from 'react';
+import { NavHashLink as NavLink } from 'react-router-hash-link';
 import Fade from 'react-reveal/Fade';
-import {IoMenuSharp, IoHomeSharp} from 'react-icons/io5';
-import {HiDocumentText} from 'react-icons/hi';
-import {BsFillGearFill} from 'react-icons/bs';
-import {FaUser, FaFolderOpen} from 'react-icons/fa';
-import {makeStyles} from '@material-ui/core/styles';
+import { IoMenuSharp, IoHomeSharp } from 'react-icons/io5';
+import { HiDocumentText } from 'react-icons/hi';
+import { BsFillGearFill } from 'react-icons/bs';
+import { FaUser, FaFolderOpen } from 'react-icons/fa';
+import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CloseIcon from '@material-ui/icons/Close';
 import logo from '../../assets/svg/logo/HackLogo.svg';
 import './Navbar.css';
-import {headerData} from '../../data/headerData';
-import {ThemeContext} from '../../contexts/ThemeContext';
+import { ThemeContext } from '../../contexts/ThemeContext';
 
 function Navbar() {
-    const {theme, setHandleDrawer} = useContext(ThemeContext);
+    const { theme, setHandleDrawer } = useContext(ThemeContext);
     const [open, setOpen] = useState(false);
 
     const handleDrawerOpen = () => {
@@ -32,11 +31,11 @@ function Navbar() {
             fontSize: '2.5rem',
             color: theme.tertiary,
             cursor: 'pointer',
-            transform: 'translateY(-10px)',
             transition: 'color 0.3s',
-            position: "fixed",
-            top: "30px",
-            right: "30px",
+            position: 'absolute',
+            right: '30px',
+            top: '50%', // Центруємо по вертикалі
+            transform: 'translateY(-50%)',
             '&:hover': {
                 color: theme.primary,
             },
@@ -77,14 +76,14 @@ function Navbar() {
         MuiDrawer: {
             padding: '0em 1.8em',
             width: '14em',
-            fontFamily: ' var(--primaryFont)',
-            fontStyle: ' normal',
-            fontWeight: ' normal',
-            fontSize: ' 24px',
+            fontFamily: 'var(--primaryFont)',
+            fontStyle: 'normal',
+            fontWeight: 'normal',
+            fontSize: '24px',
             background: theme.secondary,
             overflow: 'hidden',
-            borderTopRightRadius: '40px',
-            borderBottomRightRadius: '40px',
+            borderTopLeftRadius: '40px',
+            borderBottomLeftRadius: '40px',
             [t.breakpoints.down('sm')]: {
                 width: '12em',
             },
@@ -95,14 +94,14 @@ function Navbar() {
             cursor: 'pointer',
             color: theme.primary,
             position: 'absolute',
-            right: 40,
+            left: 40,
             top: 40,
             transition: 'color 0.2s',
             '&:hover': {
                 color: theme.tertiary,
             },
             [t.breakpoints.down('sm')]: {
-                right: 20,
+                left: 20,
                 top: 20,
             },
         },
@@ -151,7 +150,7 @@ function Navbar() {
     const classes = useStyles();
 
     const navItems = [
-        { to: '/', icon: <IoHomeSharp />, text: 'Home' },
+        { to: '/#home', icon: <IoHomeSharp />, text: 'Home' },
         { to: '/#about', icon: <FaUser />, text: 'Who am I?' },
         { to: '/#why', icon: <HiDocumentText />, text: 'Why me?' },
         { to: '/#skills', icon: <BsFillGearFill />, text: 'Skills' },
@@ -159,9 +158,12 @@ function Navbar() {
     ];
 
     return (
-        <div className='navbar'>
-            <div className='navbar--container'>
-                <img src={logo} alt="Logo" className="navbar--logo"/>
+        <div className="navbar navbar--fixed">
+            <div className="navbar--container">
+                {/* Клікабельне лого */}
+                <NavLink to="/#home" smooth={true} spy="true" duration={2000}>
+                    <img src={logo} alt="Logo" className="navbar--logo" />
+                </NavLink>
 
                 {/* Desktop Navigation */}
                 <div className={classes.desktopNav}>
@@ -171,7 +173,7 @@ function Navbar() {
                             to={item.to}
                             className={classes.desktopNavLink}
                             smooth={true}
-                            spy='true'
+                            spy="true"
                             duration={2000}
                         >
                             <span className={classes.desktopNavIcon}>
@@ -186,50 +188,40 @@ function Navbar() {
                 <IoMenuSharp
                     className={classes.navMenu}
                     onClick={handleDrawerOpen}
-                    aria-label='Menu'
-                    id='navicon'
+                    aria-label="Menu"
+                    id="navicon"
                 />
             </div>
 
             {/* Mobile Drawer */}
             <Drawer
-                variant='temporary'
-                onClose={(event, reason) => {
-                    if (reason !== 'backdropClick' && reason !== 'escapeKeyDown') {
-                        handleDrawerClose();
-                    }
-                }}
-                anchor='left'
+                variant="temporary"
+                anchor="right" // Drawer відкривається справа
                 open={open}
-                classes={{paper: classes.MuiDrawer}}
-                className='drawer'
+                onClose={handleDrawerClose} // Закриття при кліці поза Drawer
+                classes={{ paper: classes.MuiDrawer }}
+                className="drawer"
                 disableScrollLock={true}
             >
-                <div className='div-closebtn'>
+                <div className="div-closebtn">
                     <CloseIcon
                         onClick={handleDrawerClose}
-                        onKeyDown={(e) => {
-                            if (e.key === ' ' || e.key === 'Enter') {
-                                e.preventDefault();
-                                handleDrawerClose();
-                            }
-                        }}
                         className={classes.closebtnIcon}
-                        role='button'
-                        tabIndex='0'
-                        aria-label='Close'
+                        role="button"
+                        tabIndex="0"
+                        aria-label="Close"
                     />
                 </div>
-                <br/>
+                <br />
 
                 <div onClick={handleDrawerClose}>
-                    <div className='navLink--container'>
+                    <div className="navLink--container">
                         {navItems.map((item) => (
-                            <Fade left key={item.to}>
+                            <Fade right key={item.to}>
                                 <NavLink
                                     to={item.to}
                                     smooth={true}
-                                    spy='true'
+                                    spy="true"
                                     duration={2000}
                                 >
                                     <div className={classes.drawerItem}>
