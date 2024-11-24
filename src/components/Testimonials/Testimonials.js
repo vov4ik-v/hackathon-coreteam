@@ -8,6 +8,7 @@ import { ThemeContext } from '../../contexts/ThemeContext';
 import {questionsData} from '../../data/questionsData';
 
 import './Testimonials.css';
+import {aboutData} from "../../data/aboutData";
 
 function Testimonials() {
     const { theme } = useContext(ThemeContext);
@@ -47,7 +48,9 @@ function Testimonials() {
                     style={{ backgroundColor: theme.primary }}
                 >
                     <div className='testimonials--header'>
-                        <h1 style={{ color: theme.secondary }}>Відповіді на запитання</h1>
+                        <h1 className="tglitch" data-text="Відповіді на запитання">
+                            Відповіді на запитання
+                        </h1>
                     </div>
                     <div className='testimonials--body'>
                         <div

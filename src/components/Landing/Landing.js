@@ -1,9 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { ThemeContext } from '../../contexts/ThemeContext';
 import { headerData } from '../../data/headerData';
 import mainHackathonImage from '../../assets/jpg/main_hackathon.jpg';
-import TypingText from "./util";
+import TypingText from './util';
+import './Landing.css';
 
 const useStyles = makeStyles(() => ({
     landing: {
@@ -11,14 +11,9 @@ const useStyles = makeStyles(() => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'linear-gradient(90deg, #3fc337, #212121)', // Кольори градієнта
-        backgroundSize: '200% 200%', // Великий розмір фону для плавної анімації
-        animation: `$gradientAnimation 15s ease infinite`, // Довга анімація для плавності
-    },
-    '@keyframes gradientAnimation': {
-        '0%': { backgroundPosition: '0% 50%' },
-        '50%': { backgroundPosition: '100% 50%' },
-        '100%': { backgroundPosition: '0% 50%' },
+        backgroundColor: "#212121", // Black background
+        position: 'relative',
+        overflow: 'hidden', // Prevent overflow for glitch animation
     },
     content: {
         display: 'flex',
@@ -27,7 +22,7 @@ const useStyles = makeStyles(() => ({
         width: '90%',
         maxWidth: '1200px',
         padding: '2rem',
-        zIndex: 1, // Зміщує контент над фоном
+        zIndex: 1, // Ensure content is above the glitch background
     },
     image: {
         maxHeight: '500px',
@@ -35,21 +30,10 @@ const useStyles = makeStyles(() => ({
         marginRight: '2rem',
         objectFit: 'cover',
         borderRadius: '15px',
-        transition: 'transform 0.3s',
-        opacity: 0,
-        animation: `$flyIn 2s ease-out forwards`,
+        transition: 'transform 0.3s', // Smooth scaling on hover
+        opacity: 1, // No animation, image is fully visible
         '&:hover': {
-            transform: 'scale(1.05)',
-        },
-    },
-    '@keyframes flyIn': {
-        from: {
-            transform: 'translateX(-100vw)',
-            opacity: 0,
-        },
-        to: {
-            transform: 'translateX(0)',
-            opacity: 1,
+            transform: 'scale(1.05)', // Slight zoom on hover
         },
     },
     text: {
@@ -78,7 +62,6 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-
 function Landing() {
     const classes = useStyles();
     const [showDescription, setShowDescription] = useState(false);
@@ -93,12 +76,27 @@ function Landing() {
 
     return (
         <div className={classes.landing} id="home">
+            <div className="glitch-background">
+                {Array.from({length: 40}).map((_, index) => (
+                    <span
+                        className="glitch-text"
+                        key={index}
+                        style={{
+                            top: `${Math.random() * 90}vh`,
+                            left: `${Math.random() * 90}vw`,
+                            animationDelay: `${Math.random() * 2}s`,
+                        }}
+                    >
+                HACKath0n
+            </span>
+                ))}
+            </div>
             <div className={classes.content}>
-                <img src={mainHackathonImage} alt="Hackathon" className={classes.image} />
-                <div className={classes.text}>
-                    <TypingText text={headerData.name} typeSpeed={25} tag="h2" />
+                <img src={mainHackathonImage} alt="Hackathon" className={classes.image}/>
+                <div className="text-container">
+                    <TypingText text={headerData.name} typeSpeed={25} tag="h2"/>
                     {showDescription && (
-                        <TypingText text={headerData.description} typeSpeed={25} tag="p" />
+                        <TypingText text={headerData.description} typeSpeed={25} tag="p"/>
                     )}
                 </div>
             </div>

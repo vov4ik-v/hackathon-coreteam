@@ -204,3 +204,72 @@
         width: 200px;
     }
 }
+
+
+.glitch {
+    position: relative;
+    display: inline-block;
+    color: #3fc337; /* Основний колір тексту */
+    font-size: 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 0 0 2px #ffffff, 0 0 5px rgba(255, 255, 255, 0.5);
+    animation: flicker 2s infinite;
+}
+
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    color: #ff00ff; /* Пурпурний колір для глітчу */
+    z-index: -1;
+    opacity: 0.7;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    animation: glitch-skew 1s infinite ease-in-out alternate;
+}
+
+.glitch::after {
+    color: #00ffff; /* Блакитний колір для глітчу */
+    z-index: -2;
+    animation: glitch-skew 1s infinite ease-in-out alternate-reverse;
+}
+
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+    }
+    20%, 24%, 55% {
+        opacity: 0.5;
+    }
+}
+
+@keyframes glitch-skew {
+    0% {
+        clip-path: polygon(0 2%, 100% 2%, 100% 8%, 0 8%);
+        transform: translate(-2px, -2px) skew(-2deg);
+    }
+    20% {
+        clip-path: polygon(0 15%, 100% 15%, 100% 20%, 0 20%);
+        transform: translate(2px, 2px) skew(2deg);
+    }
+    40% {
+        clip-path: polygon(0 35%, 100% 35%, 100% 40%, 0 40%);
+        transform: translate(-1px, 1px) skew(-1deg);
+    }
+    60% {
+        clip-path: polygon(0 55%, 100% 55%, 100% 60%, 0 60%);
+        transform: translate(3px, -3px) skew(3deg);
+    }
+    80% {
+        clip-path: polygon(0 75%, 100% 75%, 100% 80%, 0 80%);
+        transform: translate(-3px, 3px) skew(-3deg);
+    }
+    100% {
+        clip-path: polygon(0 95%, 100% 95%, 100% 100%, 0 100%);
+        transform: translate(0, 0) skew(0deg);
+    }
+}

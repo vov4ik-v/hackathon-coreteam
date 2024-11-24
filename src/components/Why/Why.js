@@ -20,19 +20,29 @@ function Why() {
             </div>
             <div className="why-body">
                 <div className="why-img">
-                    <img src={hackPhoto} alt="Why" style={{ borderRadius: '10px', objectFit: 'cover' }} />
+                    {/*<div className="glitch-img">*/}
+                        <img src={hackPhoto} alt="Why"/>
+                    {/*</div>*/}
                 </div>
+
                 <div className="why-description">
-                    <h2 style={{color: theme.primary}}>{whyData.title}</h2>
+                    <h2 className="glitch" data-text={whyData.title}>
+                        {whyData.title}
+                    </h2>
                     <p
                         className={`description-text ${isExpanded ? 'expanded' : ''}`}
                         style={{color: theme.tertiary80}}
                         dangerouslySetInnerHTML={{__html: whyData.description1}}
                     />
 
-                    <button onClick={toggleExpand} className="expand-button">
+                    <button
+                        onClick={toggleExpand}
+                        className="expand-button"
+                        data-text={isExpanded ? 'Згорнути' : 'Показати більше'}
+                    >
                         {isExpanded ? 'Згорнути' : 'Показати більше'}
                     </button>
+
                 </div>
             </div>
         </div>
