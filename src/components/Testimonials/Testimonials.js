@@ -92,7 +92,7 @@ function Testimonials() {
                     <div className="testimonials--body">
                         <div
                             className="testimonials--slider"
-                            style={{ backgroundColor: theme.secondary }}
+                            style={{backgroundColor: theme.secondary}}
                         >
                             <Slider {...settings} ref={sliderRef}>
                                 {questionsData.map((question) => (
@@ -106,7 +106,7 @@ function Testimonials() {
                                                 }}
                                             >
                                                 <h2>{question.title}</h2>
-                                                <br />
+                                                <br/>
                                                 <h3>{question.text}</h3>
                                             </div>
                                         </div>
@@ -116,23 +116,24 @@ function Testimonials() {
                             <button
                                 className="prevBtn"
                                 onClick={gotoPrev}
-                                style={{ backgroundColor: theme.primary50 }}
+                                style={{backgroundColor: theme.primary50}}
                             >
                                 <FaArrowLeft
-                                    style={{ color: theme.secondary }}
+                                    style={{color: "white"}}
                                     aria-label="Previous testimonial"
                                 />
                             </button>
                             <button
                                 className="nextBtn"
                                 onClick={gotoNext}
-                                style={{ backgroundColor: theme.primary50 }}
+                                style={{backgroundColor: theme.primary50}}
                             >
                                 <FaArrowRight
-                                    style={{ color: theme.secondary }}
+                                    style={{color: "white"}}
                                     aria-label="Next testimonial"
                                 />
                             </button>
+
                         </div>
                     </div>
                 </div>
