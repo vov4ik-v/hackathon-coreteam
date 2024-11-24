@@ -1,18 +1,51 @@
-import React, { useContext, useRef } from 'react';
-
+import React, { useContext, useRef, useEffect } from 'react';
 import Slider from 'react-slick';
-
-import { FaQuoteLeft, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
-
+import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import { ThemeContext } from '../../contexts/ThemeContext';
-import {questionsData} from '../../data/questionsData';
-
+import { questionsData } from '../../data/questionsData';
 import './Testimonials.css';
-import {aboutData} from "../../data/aboutData";
 
 function Testimonials() {
     const { theme } = useContext(ThemeContext);
     const sliderRef = useRef();
+    const topCanvasRef = useRef();
+    const bottomCanvasRef = useRef();
+
+    const setupCanvas = (canvasRef) => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = 800;
+        canvas.height = 350;
+
+        const characters = 'HACKath0n'.split('');
+        const fontSize = 15; // Зменшений шрифт для щільності
+        const columns = canvas.width / fontSize;
+        const drops = Array.from({ length: columns }, () => 1);
+
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0F0';
+            ctx.font = `${fontSize}px monospace`;
+
+            drops.forEach((y, x) => {
+                const char = characters[Math.floor(Math.random() * characters.length)];
+                ctx.fillText(char, x * fontSize, y * fontSize);
+
+                if (y * fontSize > canvas.height && Math.random() > 0.975) drops[x] = 0;
+                drops[x]++;
+            });
+        };
+
+        const interval = setInterval(draw, 33);
+        return () => clearInterval(interval);
+    };
+
+    useEffect(() => {
+        setupCanvas(topCanvasRef);
+        setupCanvas(bottomCanvasRef);
+    }, []);
 
     const settings = {
         dots: true,
@@ -23,12 +56,7 @@ function Testimonials() {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-        margin: 3,
-        loop: true,
         autoplaySpeed: 6000,
-        draggable: true,
-        swipeToSlide: true,
-        swipe: true,
     };
 
     const gotoNext = () => {
@@ -44,36 +72,40 @@ function Testimonials() {
             {questionsData.length > 0 && (
                 <div
                     id="answers"
-                    className='testimonials'
-                    style={{ backgroundColor: theme.primary }}
+                    className="testimonials"
+                    style={{ backgroundColor: theme.secondary }}
                 >
-                    <div className='testimonials--header'>
+                    {/* Трикутники */}
+                    <div className="testimonials--triangle">
+                        <canvas ref={topCanvasRef} className="matrix-canvas"></canvas>
+                    </div>
+                    <div className="testimonials--triangle-bottom-right">
+                        <canvas ref={bottomCanvasRef} className="matrix-canvas"></canvas>
+                    </div>
+
+                    <div className="testimonials--header">
                         <h1 className="tglitch" data-text="Відповіді на запитання">
                             Відповіді на запитання
                         </h1>
                     </div>
-                    <div className='testimonials--body'>
+                    <div className="testimonials--body">
                         <div
-                            className='testimonials--slider'
-                            style={{ backgroundColor: theme.primary }}
+                            className="testimonials--slider"
+                            style={{ backgroundColor: theme.secondary }}
                         >
                             <Slider {...settings} ref={sliderRef}>
                                 {questionsData.map((question) => (
-                                    <div
-                                        className='single--testimony'
-                                        key={question.id}
-                                    >
-                                        <div className='testimonials--container'>
+                                    <div className="single--testimony" key={question.id}>
+                                        <div className="testimonials--container">
                                             <div
-                                                className='review--content'
+                                                className="review--content"
                                                 style={{
-                                                    backgroundColor:
-                                                        theme.secondary,
+                                                    backgroundColor: theme.primary50,
                                                     color: theme.tertiary,
                                                 }}
                                             >
                                                 <h2>{question.title}</h2>
-                                                <br/>
+                                                <br />
                                                 <h3>{question.text}</h3>
                                             </div>
                                         </div>
@@ -81,23 +113,23 @@ function Testimonials() {
                                 ))}
                             </Slider>
                             <button
-                                className='prevBtn'
+                                className="prevBtn"
                                 onClick={gotoPrev}
-                                style={{ backgroundColor: theme.secondary }}
+                                style={{ backgroundColor: theme.primary50 }}
                             >
                                 <FaArrowLeft
-                                    style={{ color: theme.primary }}
-                                    aria-label='Previous testimonial'
+                                    style={{ color: theme.secondary }}
+                                    aria-label="Previous testimonial"
                                 />
                             </button>
                             <button
-                                className='nextBtn'
+                                className="nextBtn"
                                 onClick={gotoNext}
-                                style={{ backgroundColor: theme.secondary }}
+                                style={{ backgroundColor: theme.primary50 }}
                             >
                                 <FaArrowRight
-                                    style={{ color: theme.primary }}
-                                    aria-label='Next testimonial'
+                                    style={{ color: theme.secondary }}
+                                    aria-label="Next testimonial"
                                 />
                             </button>
                         </div>

@@ -26,7 +26,7 @@ export const greenThemeDark = {
     primary80: '#3fc337cc',
     primary50: '#3fc33780',
     primary30: '#3fc3374d',
-    secondary: '#212121',
+    secondary: '#000000',
     secondary70: '#212121b3',
     secondary50: '#21212180',
     tertiary: '#eaeaea',
