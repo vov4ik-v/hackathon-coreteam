@@ -1,12 +1,12 @@
 .testimonials {
     font-family: var(--primaryFont);
-    height: 100vh;
+    height: 140vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    position: relative; /* Додаємо relative для контейнера */
+    position: relative;
 }
 
 .testimonials--triangle {
@@ -17,7 +17,7 @@
     height: 350px;
     overflow: hidden;
     clip-path: polygon(0 0, 100% 0, 0 100%);
-    background-color: transparent; /* Прозорий фон для трикутника */
+    background-color: transparent;
     z-index: 1;
 }
 
@@ -33,8 +33,6 @@
     z-index: 1;
 }
 
-
-/* Слайдер */
 .slick-slider {
     height: 100% !important;
     width: 100%;
@@ -53,14 +51,15 @@
     position: relative !important;
     bottom: 1rem !important;
 }
-.testimonials--header{
+
+.testimonials--header {
     z-index: 2;
 }
 
 .testimonials--header h1 {
     font-style: normal;
     font-weight: bold;
-    font-size: 2.8rem; /* Зменшено для великих екранів */
+    font-size: 2.8rem;
     text-align: center;
     margin-bottom: 1rem;
 }
@@ -102,48 +101,47 @@
 }
 
 .testimonials--slider {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
     width: 70%;
-}
-
-.single--testimony {
-    padding: 2rem;
-    width: 100%;
-    height: 500px;
-    position: relative;
+    height: auto; /* Висота залежить від вмісту */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
+.single--testimony {
+    width: 100%;
+    height: auto; /* Автоматична висота для врахування вмісту */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
 
 .matrix-canvas {
     position: absolute;
     width: 100%;
     height: 100%;
-    pointer-events: none; /* Блокування взаємодій */
-    z-index: 1; /* Канва позаду контенту */
+    pointer-events: none;
+    z-index: 1;
 }
-
 
 .testimonials--container {
     width: 100%;
-    height: 100%;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    padding: 20px 0;
 }
 
-/* Контейнер для тексту відгуку */
 .review--content {
     margin: 0 auto;
     width: 90%;
-    height: 250px;
+    min-height: 250px; /* Мінімальна висота */
+    max-height: none; /* Знімаємо обмеження на висоту */
     border-radius: 20px;
     box-sizing: border-box;
     padding: 30px 40px;
@@ -152,43 +150,48 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    overflow: visible; /* Дозволяємо контенту розтягувати контейнер */
 }
 
 .review--content h2 {
-    font-size: 1.5rem; /* Зменшено для великих екранів */
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
     font-weight: 600;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .review--content h3 {
-    font-size: 0.9rem; /* Зменшено для великих екранів */
+    font-size: clamp(0.8rem, 2vw, 1rem);
     font-weight: 400;
     font-style: italic;
     line-height: 1.5;
+    text-align: center;
 }
 
 .review--content p {
     font-style: italic;
     font-weight: 300;
     width: 80%;
-    font-size: 0.8rem; /* Зменшено для великих екранів */
+    font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+    text-align: center;
 }
 
 .review--content h1 {
-    font-size: 1.2rem; /* Зменшено для великих екранів */
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
     font-weight: 600;
     margin-top: 10px;
+    text-align: center;
 }
 
 .review--content h4 {
-    font-size: 0.8rem; /* Зменшено для великих екранів */
+    font-size: clamp(0.7rem, 1.5vw, 1rem);
     font-weight: 500;
 }
 
 /* Адаптивні стилі для малих екранів */
 @media (max-width: 992px) {
     .testimonials {
-        height: 100%;
+        height: auto;
         padding-bottom: 2rem;
     }
 
@@ -208,6 +211,7 @@
     .review--content h3 {
         font-size: 0.9rem;
     }
+
     .testimonials--triangle,
     .testimonials--triangle-bottom-right {
         display: none;
@@ -226,14 +230,15 @@
     .testimonials--body button {
         display: none;
     }
-
+    .review--content {
+        padding: 20px 30px;
+        min-height: 300px;
+    }
+    .single--testimony {
+        padding: 1.5rem;
+    }
     .testimonials--slider {
         width: 90%;
-    }
-
-    .review--content {
-        border-radius: 50px;
-        padding: 20px 30px;
     }
 
     .review--content h2 {
@@ -243,14 +248,12 @@
     .review--content h3 {
         font-size: 0.9rem;
     }
-
 }
 
 @media (max-width: 576px) {
     .review--content {
-        border-radius: 20px;
-        min-height: 300px;
         padding: 15px 20px;
+        min-height: auto;
     }
 
     .review--content h2 {
@@ -297,11 +300,10 @@
     }
 }
 
-
 .tglitch {
     position: relative;
     display: inline-block;
-    color: white; /* Основний колір тексту */
+    color: white;
     font-size: 3rem;
     font-weight: bold;
     text-transform: uppercase;
@@ -317,7 +319,7 @@
     top: 0;
     width: 100%;
     height: 100%;
-    color: #ff00ff; /* Пурпурний колір для глітчу */
+    color: #ff00ff;
     z-index: -1;
     opacity: 0.7;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
@@ -325,7 +327,7 @@
 }
 
 .tglitch::after {
-    color: #00ffff; /* Блакитний колір для глітчу */
+    color: #00ffff;
     z-index: -2;
     animation: tglitch-skew 1s infinite ease-in-out alternate-reverse;
 }
@@ -365,4 +367,3 @@
         transform: translate(0, 0) skew(0deg);
     }
 }
-

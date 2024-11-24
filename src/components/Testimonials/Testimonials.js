@@ -55,9 +55,10 @@ function Testimonials() {
         arrows: false,
         slidesToShow: 1,
         slidesToScroll: 1,
-        autoplay: true,
+        autoplay: false,
         autoplaySpeed: 6000,
     };
+
 
     const gotoNext = () => {
         sliderRef.current.slickNext();
