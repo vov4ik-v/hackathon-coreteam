@@ -77,6 +77,7 @@
     font-weight: bold;
     padding: 10px 20px;
     border: none;
+    margin-top: 15px;
     border-radius: 20px;
     cursor: pointer;
     text-transform: uppercase;
@@ -227,6 +228,11 @@
         margin-top: 40px;
         width: 550px;
         flex: 0.4;
+    }
+    .expand-button{
+        font-size: 1rem;
+        padding: 5px 10px;
+
     }
 }
 

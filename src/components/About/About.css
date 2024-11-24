@@ -68,28 +68,6 @@
     max-height: 100rem; /* Велике значення для повного відображення */
 }
 
-.expand-button {
-    background-color: #007bff;
-    border: none;
-    border-radius: 20px;
-    color: white;
-    cursor: pointer;
-    font-size: 1rem;
-    padding: 10px 20px;
-    margin-top: 0.5rem;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-weight: 600;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.expand-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.05); /* Невелике збільшення при наведенні */
-}
-
-.expand-button:active {
-    transform: scale(0.98); /* Зменшення при кліку */
-}
 
 .about-img {
     position: relative; /* Змінено на relative для внутрішньої позиції */
